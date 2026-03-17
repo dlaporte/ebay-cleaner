@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "description": "Hide or dim eBay listings from low-feedback sellers. Set thresholds and get a warning banner on suspicious listings.",
   "permissions": ["storage", "tabs"],
-  "host_permissions": ["*://*.ebay.com/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
