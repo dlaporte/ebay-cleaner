@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "eBay Seller Filter",
+  "name": "eBay Cleaner",
   "version": "1.0.0",
-  "description": "Automatically hide or dim eBay listings from low-feedback sellers. Set your own feedback thresholds and get a warning banner when you land on a suspicious listing.",
+  "description": "Hide or dim eBay listings from low-feedback sellers. Set thresholds and get a warning banner on suspicious listings.",
   "permissions": ["storage", "tabs"],
   "host_permissions": ["*://*.ebay.com/*"],
   "action": {
