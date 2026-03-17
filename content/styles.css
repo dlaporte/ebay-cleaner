@@ -29,9 +29,9 @@ li.s-card.ebf-dimmed:hover {
 
 /* === Listing Page: Warning Banner === */
 .ebf-warning-banner {
-  background: #fff3cd;
-  border-bottom: 2px solid #ffc107;
-  color: #856404;
+  background: #f8d7da;
+  border-bottom: 2px solid #dc3545;
+  color: #721c24;
   padding: 12px 20px;
   font-size: 14px;
   font-weight: 500;
@@ -61,7 +61,7 @@ li.s-card.ebf-dimmed:hover {
 .ebf-warning-banner__close {
   background: none;
   border: none;
-  color: #856404;
+  color: #721c24;
   font-size: 20px;
   cursor: pointer;
   padding: 0 0 0 16px;
@@ -69,7 +69,7 @@ li.s-card.ebf-dimmed:hover {
 }
 
 .ebf-warning-banner__close:hover {
-  color: #533f03;
+  color: #491217;
 }
 
 /* Push page content down when sticky banner is shown */
