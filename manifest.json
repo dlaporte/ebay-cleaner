@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "eBay Seller Filter",
   "version": "1.0.0",
-  "description": "Filter eBay search results by seller feedback quality",
+  "description": "Automatically hide or dim eBay listings from low-feedback sellers. Set your own feedback thresholds and get a warning banner when you land on a suspicious listing.",
   "permissions": ["storage", "tabs"],
   "host_permissions": ["*://*.ebay.com/*"],
   "action": {
