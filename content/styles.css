@@ -1,0 +1,78 @@
+/* === Search Results: Hidden listings === */
+li.s-card.ebf-hidden {
+  display: none !important;
+}
+
+/* === Search Results: Dimmed listings === */
+li.s-card.ebf-dimmed {
+  opacity: 0.35 !important;
+  position: relative;
+}
+
+li.s-card.ebf-dimmed:hover {
+  opacity: 0.7 !important;
+}
+
+.ebf-dim-label {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #d32f2f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* === Listing Page: Warning Banner === */
+.ebf-warning-banner {
+  background: #fff3cd;
+  border-bottom: 2px solid #ffc107;
+  color: #856404;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.ebf-warning-banner.ebf-banner-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.ebf-warning-banner.ebf-banner-dismissible {
+  position: relative;
+}
+
+.ebf-warning-banner__text {
+  flex: 1;
+}
+
+.ebf-warning-banner__close {
+  background: none;
+  border: none;
+  color: #856404;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 0 0 16px;
+  line-height: 1;
+}
+
+.ebf-warning-banner__close:hover {
+  color: #533f03;
+}
+
+/* Push page content down when sticky banner is shown */
+body.ebf-has-sticky-banner {
+  padding-top: 48px !important;
+}
