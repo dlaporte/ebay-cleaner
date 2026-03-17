@@ -51,7 +51,8 @@ Settings are persisted via `chrome.storage.sync` so they roam across devices.
 - Background service worker listens for messages from content scripts
 - When a search page content script finishes filtering, it sends the filtered count to the background
 - Background worker updates the extension icon badge with the count
-- Badge clears when navigating away from a search page
+- Badge count **accumulates** as new results load via infinite scroll / lazy loading
+- Badge clears on navigation: background uses `chrome.tabs.onUpdated` to detect URL changes — if the new URL is not an eBay search page, the badge is cleared for that tab
 
 ## Technical Architecture
 
@@ -61,7 +62,7 @@ The extension uses Chrome Manifest V3 (current standard).
 
 **Permissions:**
 - `storage` — for persisting settings
-- `activeTab` — for badge updates
+- `tabs` — for detecting tab navigation changes (badge clearing)
 
 **Host permissions:**
 - `*://*.ebay.com/*`
@@ -73,6 +74,7 @@ manifest.json              — Extension manifest (MV3)
 popup.html                 — Settings UI markup
 popup.css                  — Settings UI styles
 popup.js                   — Settings UI logic (read/write chrome.storage)
+content/selectors.js       — Centralized DOM selectors (easy to update)
 content/search.js          — Content script for search result pages
 content/listing.js         — Content script for individual listing pages
 content/styles.css         — Injected styles (dimming, banners)
@@ -92,12 +94,32 @@ icons/
 
 ### Data Extraction Strategy
 
-Seller feedback data is present in the DOM on both search and listing pages:
+Seller feedback data is present in the DOM on both search and listing pages. Since eBay's DOM structure can change, all selectors are centralized in a single `content/selectors.js` file for easy maintenance.
 
-- **Search results**: Each listing card contains seller info with feedback count and percentage. The content script queries these elements by their CSS selectors.
-- **Listing pages**: The seller info panel displays feedback score and percentage.
+**Selector discovery approach**: The exact CSS selectors must be determined at implementation time by inspecting the live eBay DOM. The implementation plan should include a research step to capture current selectors for:
 
-Since eBay's DOM structure can change, selectors should be documented clearly so they're easy to update. The extraction logic should be resilient — if a selector fails, the listing is left untouched (fail open, not fail closed).
+- **Search results**: Each listing card's seller info area — feedback count (numeric) and positive percentage
+- **Listing pages**: The seller info panel — feedback score and positive percentage
+
+**Selector module** (`content/selectors.js`):
+```js
+// Centralized selectors — update here when eBay changes their DOM
+export const SELECTORS = {
+  search: {
+    listingCard: '...', // Each result item container
+    sellerInfo: '...',  // Seller info within a card
+    feedbackCount: '...', // Numeric feedback count
+    feedbackPercent: '...' // Positive percentage
+  },
+  listing: {
+    sellerPanel: '...',
+    feedbackCount: '...',
+    feedbackPercent: '...'
+  }
+};
+```
+
+**Resilience**: If a selector fails to match, the listing is left untouched (fail open, not fail closed). Extraction failures are logged to the console with a `[eBay Seller Filter]` prefix for easy debugging.
 
 ### Settings Module
 
@@ -115,7 +137,7 @@ async function getSettings() { ... }
 async function saveSettings(settings) { ... }
 ```
 
-Both content scripts and the popup import this module to ensure consistent defaults and storage keys.
+The `common/settings.js` file is included as an additional script in each content script's `js` array in the manifest (loaded before the main content script). The popup loads it via a `<script>` tag. This avoids ES module complexity in content scripts.
 
 ## Edge Cases
 
