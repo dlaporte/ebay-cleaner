@@ -38,13 +38,16 @@
         card.classList.add('ebf-hidden');
       } else {
         card.classList.add('ebf-dimmed');
-        const label = document.createElement('div');
-        label.className = 'ebf-dim-label';
-        const countStr = data.feedbackCount !== null ? data.feedbackCount : '?';
-        const pctStr = data.positivePercent !== null ? data.positivePercent + '%' : '?';
-        label.textContent = 'Low seller feedback (' + countStr + ' reviews, ' + pctStr + ' positive)';
-        card.style.position = 'relative';
-        card.appendChild(label);
+        const imageWrap = card.querySelector(EBF_SELECTORS.search.imageWrapper);
+        if (imageWrap) {
+          imageWrap.classList.add('ebf-dim-label-wrap');
+          const label = document.createElement('div');
+          label.className = 'ebf-dim-label';
+          const countStr = data.feedbackCount !== null ? data.feedbackCount : '?';
+          const pctStr = data.positivePercent !== null ? data.positivePercent + '%' : '?';
+          label.textContent = 'Low feedback (' + countStr + ' reviews, ' + pctStr + ')';
+          imageWrap.appendChild(label);
+        }
       }
     }
   }
