@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <h1>eBay Seller Filter</h1>
+
+    <div class="field">
+      <label for="minFeedbackCount">Minimum feedback count</label>
+      <input type="number" id="minFeedbackCount" min="0" step="1">
+    </div>
+
+    <div class="field">
+      <label for="minPositivePercent">Minimum positive feedback %</label>
+      <input type="number" id="minPositivePercent" min="0" max="100" step="1">
+    </div>
+
+    <div class="field">
+      <label for="filterMode">Filter mode</label>
+      <select id="filterMode">
+        <option value="hide">Hide listings</option>
+        <option value="dim">Dim listings</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="bannerStyle">Warning banner style</label>
+      <select id="bannerStyle">
+        <option value="sticky">Sticky (stays on scroll)</option>
+        <option value="dismissible">Dismissible</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button id="save">Save</button>
+      <span id="status"></span>
+    </div>
+  </div>
+
+  <script src="common/settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
