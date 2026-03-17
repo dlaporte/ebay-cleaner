@@ -59,6 +59,9 @@
     chrome.runtime.sendMessage({
       type: 'ebf-update-badge',
       count: filteredCount
+    }, function () {
+      // Suppress "Could not establish connection" errors when service worker is inactive
+      void chrome.runtime.lastError;
     });
   }
 

@@ -8,8 +8,8 @@
       return null;
     }
 
-    var feedbackCount = null;
-    var positivePercent = null;
+    let feedbackCount = null;
+    let positivePercent = null;
 
     // Extract feedback count: text like "(154843)"
     const countEl = document.querySelector(EBF_SELECTORS.listing.feedbackCount);
