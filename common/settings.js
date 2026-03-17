@@ -2,7 +2,8 @@ const EBF_DEFAULTS = {
   minFeedbackCount: 1,
   minPositivePercent: 90,
   filterMode: 'hide',
-  bannerStyle: 'sticky'
+  bannerStyle: 'sticky',
+  galleryMode: 'redirect'  // 'banner' | 'redirect'
 };
 
 async function ebfGetSettings() {

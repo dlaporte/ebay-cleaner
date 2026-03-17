@@ -1,13 +1,64 @@
 (async function ebfSearchMain() {
-  // Gallery mode doesn't include seller feedback data — switch to list view
+  const settings = await ebfGetSettings();
+
+  // Gallery mode doesn't include seller feedback data — handle per user preference
   if (window.location.search.includes('_dmd=2')) {
-    var url = new URL(window.location.href);
-    url.searchParams.set('_dmd', '1');
-    window.location.replace(url.toString());
+    var listUrl = new URL(window.location.href);
+    listUrl.searchParams.set('_dmd', '1');
+
+    var galleryBanner = document.createElement('div');
+    galleryBanner.className = 'ebf-warning-banner ebf-banner-sticky';
+    document.body.classList.add('ebf-has-sticky-banner');
+
+    var galleryText = document.createElement('span');
+    galleryText.className = 'ebf-warning-banner__text';
+
+    if (settings.galleryMode === 'redirect') {
+      var secondsLeft = 5;
+      var countSpan = document.createElement('strong');
+      countSpan.textContent = secondsLeft + 's';
+
+      var before = document.createTextNode('\u26A0 Seller filtering does not work in gallery view. Switching to list view in ');
+      var after = document.createTextNode('...');
+      galleryText.appendChild(before);
+      galleryText.appendChild(countSpan);
+      galleryText.appendChild(after);
+
+      var interval = setInterval(function () {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          clearInterval(interval);
+          window.location.replace(listUrl.toString());
+        } else {
+          countSpan.textContent = secondsLeft + 's';
+        }
+      }, 1000);
+    } else {
+      var switchLink = document.createElement('a');
+      switchLink.href = listUrl.toString();
+      switchLink.textContent = 'Switch to list view';
+      switchLink.style.color = 'inherit';
+      switchLink.style.fontWeight = '700';
+
+      var bannerMsg = document.createTextNode('\u26A0 Seller filtering does not work in gallery view. ');
+      galleryText.appendChild(bannerMsg);
+      galleryText.appendChild(switchLink);
+    }
+
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'ebf-warning-banner__close';
+    closeBtn.textContent = '\u00D7';
+    closeBtn.title = 'Dismiss';
+    closeBtn.addEventListener('click', function () {
+      galleryBanner.remove();
+      document.body.classList.remove('ebf-has-sticky-banner');
+    });
+
+    galleryBanner.appendChild(galleryText);
+    galleryBanner.appendChild(closeBtn);
+    document.body.prepend(galleryBanner);
     return;
   }
-
-  const settings = await ebfGetSettings();
   let filteredCount = 0;
 
   function shouldFilter(feedbackCount, positivePercent) {

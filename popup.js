@@ -1,5 +1,5 @@
 (async function () {
-  var fields = ['minFeedbackCount', 'minPositivePercent', 'filterMode', 'bannerStyle'];
+  var fields = ['minFeedbackCount', 'minPositivePercent', 'filterMode', 'bannerStyle', 'galleryMode'];
 
   // Load current settings into form
   var settings = await ebfGetSettings();
@@ -15,6 +15,7 @@
     updated.minPositivePercent = parseInt(document.getElementById('minPositivePercent').value, 10);
     updated.filterMode = document.getElementById('filterMode').value;
     updated.bannerStyle = document.getElementById('bannerStyle').value;
+    updated.galleryMode = document.getElementById('galleryMode').value;
 
     // Basic validation
     if (isNaN(updated.minFeedbackCount) || updated.minFeedbackCount < 0) {
