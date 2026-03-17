@@ -1,4 +1,12 @@
 (async function ebfSearchMain() {
+  // Gallery mode doesn't include seller feedback data — switch to list view
+  if (window.location.search.includes('_dmd=2')) {
+    var url = new URL(window.location.href);
+    url.searchParams.set('_dmd', '1');
+    window.location.replace(url.toString());
+    return;
+  }
+
   const settings = await ebfGetSettings();
   let filteredCount = 0;
 
