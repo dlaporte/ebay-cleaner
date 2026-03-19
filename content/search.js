@@ -62,8 +62,8 @@
   let filteredCount = 0;
 
   function shouldFilter(feedbackCount, positivePercent) {
-    if (feedbackCount !== null && feedbackCount < settings.minFeedbackCount) return true;
-    if (positivePercent !== null && positivePercent < settings.minPositivePercent) return true;
+    if (settings.filterFeedbackCount && feedbackCount !== null && feedbackCount < settings.minFeedbackCount) return true;
+    if (settings.filterPositivePercent && positivePercent !== null && positivePercent < settings.minPositivePercent) return true;
     return false;
   }
 

@@ -6,17 +6,34 @@
 </head>
 <body>
   <div class="popup">
-    <h1>eBay Seller Filter</h1>
+    <h1>eBay Cleaner</h1>
 
-    <div class="field">
-      <label for="minFeedbackCount">Minimum feedback count</label>
-      <input type="number" id="minFeedbackCount" min="0" step="1">
-    </div>
-
-    <div class="field">
-      <label for="minPositivePercent">Minimum positive feedback %</label>
-      <input type="number" id="minPositivePercent" min="0" max="100" step="1">
-    </div>
+    <table class="filter-table">
+      <thead>
+        <tr>
+          <th class="col-filter">Filter</th>
+          <th class="col-threshold">Threshold</th>
+          <th class="col-active">Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Feedback count</td>
+          <td><input type="number" id="minFeedbackCount" min="0" step="1"></td>
+          <td><input type="checkbox" id="filterFeedbackCount"></td>
+        </tr>
+        <tr>
+          <td>Positive feedback %</td>
+          <td><input type="number" id="minPositivePercent" min="0" max="100" step="1"></td>
+          <td><input type="checkbox" id="filterPositivePercent"></td>
+        </tr>
+        <tr>
+          <td>Classified ads</td>
+          <td class="no-threshold">&ndash;</td>
+          <td><input type="checkbox" id="filterClassifieds"></td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="field">
       <label for="filterMode">Filter mode</label>
@@ -32,13 +49,6 @@
         <option value="sticky">Sticky (stays on scroll)</option>
         <option value="dismissible">Dismissible</option>
       </select>
-    </div>
-
-    <div class="field checkbox">
-      <label>
-        <input type="checkbox" id="filterClassifieds">
-        Filter classified ads
-      </label>
     </div>
 
     <div class="field">
