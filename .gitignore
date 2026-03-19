@@ -3,3 +3,4 @@
 .playwright-mcp/
 .superpowers/
 docs/superpowers/
+screenshot*.png
