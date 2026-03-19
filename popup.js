@@ -7,6 +7,7 @@
     var el = document.getElementById(fields[i]);
     if (el) el.value = settings[fields[i]];
   }
+  document.getElementById('filterClassifieds').checked = settings.filterClassifieds;
 
   // Save
   document.getElementById('save').addEventListener('click', async function () {
@@ -15,6 +16,7 @@
     updated.minPositivePercent = parseInt(document.getElementById('minPositivePercent').value, 10);
     updated.filterMode = document.getElementById('filterMode').value;
     updated.bannerStyle = document.getElementById('bannerStyle').value;
+    updated.filterClassifieds = document.getElementById('filterClassifieds').checked;
     updated.galleryMode = document.getElementById('galleryMode').value;
 
     // Basic validation

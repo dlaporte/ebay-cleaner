@@ -2,7 +2,8 @@ const EBF_SELECTORS = {
   search: {
     listingCard: 'li.s-card',
     sellerInfoRow: '.su-card-container__attributes__secondary .s-card__attribute-row',
-    imageWrapper: '.s-card__media-wrapper'
+    imageWrapper: '.s-card__media-wrapper',
+    classifiedText: '.s-card__attribute-row .su-styled-text.secondary.large'
   },
   listing: {
     sellerCard: '[data-testid="x-sellercard-atf"]',

@@ -3,7 +3,8 @@ const EBF_DEFAULTS = {
   minPositivePercent: 90,
   filterMode: 'hide',
   bannerStyle: 'sticky',
-  galleryMode: 'redirect'  // 'banner' | 'redirect'
+  galleryMode: 'redirect',  // 'banner' | 'redirect'
+  filterClassifieds: true
 };
 
 async function ebfGetSettings() {

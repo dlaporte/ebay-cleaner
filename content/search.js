@@ -83,31 +83,48 @@
     return null;
   }
 
+  function isClassifiedAd(card) {
+    var spans = card.querySelectorAll(EBF_SELECTORS.search.classifiedText);
+    for (var i = 0; i < spans.length; i++) {
+      if (spans[i].textContent.trim().indexOf('Classified Ad') === 0) return true;
+    }
+    return false;
+  }
+
+  function applyFilter(card, labelText) {
+    filteredCount++;
+    if (settings.filterMode === 'hide') {
+      card.classList.add('ebf-hidden');
+    } else {
+      card.classList.add('ebf-dimmed');
+      var imageWrap = card.querySelector(EBF_SELECTORS.search.imageWrapper);
+      if (imageWrap) {
+        imageWrap.classList.add('ebf-dim-label-wrap');
+        var label = document.createElement('div');
+        label.className = 'ebf-dim-label';
+        label.textContent = labelText;
+        imageWrap.appendChild(label);
+      }
+    }
+  }
+
   function processCard(card) {
     if (card.classList.contains('ebf-processed')) return;
     card.classList.add('ebf-processed');
+
+    // Check for classified ads first
+    if (settings.filterClassifieds && isClassifiedAd(card)) {
+      applyFilter(card, 'Classified Ad');
+      return;
+    }
 
     const data = extractSellerData(card);
     if (!data) return; // Can't extract — leave untouched
 
     if (shouldFilter(data.feedbackCount, data.positivePercent)) {
-      filteredCount++;
-
-      if (settings.filterMode === 'hide') {
-        card.classList.add('ebf-hidden');
-      } else {
-        card.classList.add('ebf-dimmed');
-        const imageWrap = card.querySelector(EBF_SELECTORS.search.imageWrapper);
-        if (imageWrap) {
-          imageWrap.classList.add('ebf-dim-label-wrap');
-          const label = document.createElement('div');
-          label.className = 'ebf-dim-label';
-          const countStr = data.feedbackCount !== null ? data.feedbackCount : '?';
-          const pctStr = data.positivePercent !== null ? data.positivePercent + '%' : '?';
-          label.textContent = 'Low feedback (' + countStr + ' reviews, ' + pctStr + ')';
-          imageWrap.appendChild(label);
-        }
-      }
+      var countStr = data.feedbackCount !== null ? data.feedbackCount : '?';
+      var pctStr = data.positivePercent !== null ? data.positivePercent + '%' : '?';
+      applyFilter(card, 'Low feedback (' + countStr + ' reviews, ' + pctStr + ')');
     }
   }
 
